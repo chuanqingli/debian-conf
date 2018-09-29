@@ -2,16 +2,8 @@
 
 <<'COMMENT'
 知识点：
-1、archlinux安装脚本；
-2、echo的增强输出；
-3、curl、wget下载文件，输出格式化；
-4、mktemp指定临时文件；
-5、字符串分组及匹配；
-6、数组和文本的两种遍历（index、value）；
-7、sed格式化或清除指定内容；
-8、grep查找内容；
-9、变量的计算；
-10、下标数组和关联数组；
+sed跨行替换
+dirname,readlink,which,head
 COMMENT
 
 install-soft(){
