@@ -101,20 +101,22 @@ config-jdk6(){
     cd ${rundir}
 
     for ename in "java" "javac" "jar";do
-        update-alternatives --install /usr/bin/${ename} ${ename} /opt/java/jdk1.6.0_45/bin/${ename} 300
+        #数字越大，优先级越高
+        update-alternatives --install /usr/bin/${ename} ${ename} /opt/java/jdk1.6.0_45/bin/${ename} 9000
     done
 
+#    return
 
-    checkok=`grep "^JAVA_HOME" /etc/profile`
-    if [[ ${checkok} =~ "JAVA_HOME" ]];then
-        return
-    fi
-
-    #echo "export JAVA_HOME=$(dirname $(dirname $(readlink -f $(which javac))))">>/etc/profile
-    echo "export JAVA_HOME=$(dirname $(dirname $(update-alternatives --list java|head -n 1)))">>/etc/profile
-    echo "export JRE_HOME=$JAVA_HOME/jre">>/etc/profile
-    echo "export CLASSPATH=.:$JAVA_HOME/lib:$JRE_HOME/lib">>/etc/profile
-    echo "export PATH=$JAVA_HOME/bin:$PATH">>/etc/profile
+#    checkok=`grep "^JAVA_HOME" /etc/profile`
+#    if [[ ${checkok} =~ "JAVA_HOME" ]];then
+#        return
+#    fi
+#
+#    #echo "export JAVA_HOME=$(dirname $(dirname $(readlink -f $(which javac))))">>/etc/profile
+#    echo 'export JAVA_HOME=$(dirname $(dirname $(update-alternatives --list java|head -n 1)))'>>/etc/profile
+#    echo 'export JRE_HOME=$JAVA_HOME/jre'>>/etc/profile
+#    echo 'export CLASSPATH=.:$JAVA_HOME/lib:$JRE_HOME/lib'>>/etc/profile
+#    echo 'export PATH=$JAVA_HOME/bin:$PATH'>>/etc/profile
 }
 
 
