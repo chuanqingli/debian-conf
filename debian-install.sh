@@ -119,5 +119,5 @@ config-jdk6(){
 #    echo 'export PATH=$JAVA_HOME/bin:$PATH'>>/etc/profile
 }
 
-
+source ../shell-func/git-func.sh
 $1
