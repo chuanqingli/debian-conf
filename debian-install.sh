@@ -119,5 +119,16 @@ config-jdk6(){
 #    echo 'export PATH=$JAVA_HOME/bin:$PATH'>>/etc/profile
 }
 
+config-hosts(){
+   checkok=`grep "^#tianya-hosts" /etc/hosts`
+   if [[ ${checkok} =~ "tianya-hosts" ]];then
+       return
+   fi
+
+   echo '#tianya-hosts'>>/etc/hosts
+
+   cat /home/bak/debianconf/tianya-hosts>>/etc/hosts
+}
+
 source ../shell-func/git-func.sh
 $1
