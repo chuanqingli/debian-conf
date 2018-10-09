@@ -130,5 +130,25 @@ config-hosts(){
    cat /home/bak/debianconf/tianya-hosts>>/etc/hosts
 }
 
+config-deblist(){
+    stable=`lsb_release -c --short`
+    sourl='http://mirrors.163.com/'
+    checkok=`grep ${sourl} /etc/apt/sources.list`
+    if [[ -n ${checkok} ]];then
+        return
+    fi
+
+    for ename in ${stable}/updates ${stable} ${stable}-updates ${stable}-backports;do
+        pname='debian'
+        if [[ ${ename} == ${stable}/updates ]];then
+            pname='debian-security'
+        fi
+        echo "deb ${sourl}${pname}/ ${ename} main non-free contrib">>/etc/apt/sources.list
+        echo "deb-src ${sourl}${pname}/ ${ename} main non-free contrib">>/etc/apt/sources.list
+    done
+
+    apt-get update && apt-get upgrade
+}
+
 source ../shell-func/git-func.sh
 $1
