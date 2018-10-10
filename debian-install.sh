@@ -121,7 +121,7 @@ config-jdk6(){
 
 config-hosts(){
    checkok=`grep "^#tianya-hosts" /etc/hosts`
-   if [[ ${checkok} =~ "tianya-hosts" ]];then
+   if [[ -n ${checkok} ]];then
        return
    fi
 
