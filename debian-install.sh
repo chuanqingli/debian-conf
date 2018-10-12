@@ -150,5 +150,21 @@ config-deblist(){
     apt-get update && apt-get upgrade
 }
 
+get-hd-media(){
+    vurl=http://mirrors.163.com/debian/dists/stable/main/installer-amd64/current/images/hd-media/
+    mkdir -p gtk
+    for ename in gtk/initrd.gz gtk/vmlinuz;do
+        wget ${vurl}/${ename} -O ${ename}
+    done
+}
+
+config-myiso(){
+    mkdir -p /mnt/debinst
+    debootstrap --arch amd64 stretch  /mnt/debinst http://mirrors.163.com/debian
+
+}
+
+
+
 source ../shell-func/git-func.sh
 $1
