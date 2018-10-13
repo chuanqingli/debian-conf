@@ -1,0 +1,29 @@
+#!/bin/sh
+exec tail -n +3 $0
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+
+menuentry 'Debian install' {
+    set background_color=black
+		set root='hd2,msdos1'
+    linux    /debian/vmlinuz vga=788 --- quiet 
+    initrd   /debian/initrd.gz
+}
+
+menuentry 'CentOS install' {
+    set background_color=black
+		set root='hd2,msdos1'
+set isofile="/centos/CentOS-7-x86_64-Minimal-1804.iso"
+		loopback loop ${isofile}
+		linux    (loop)/isolinux/vmlinuz inst.stage2=hd:UUID=4cc5c7af-4fed-40e9-afcd-7aef3819a32b:/${isofile} rhgb
+		initrd    (loop)/isolinux/initrd.img 
+}
+
+
+menuentry 'CentOS 7' {
+    set background_color=black
+		set root='hd1,msdos1'
+		configfile /boot/grub2/grub.cfg
+}
+
