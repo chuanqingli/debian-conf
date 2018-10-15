@@ -4,6 +4,10 @@ exec tail -n +3 $0
 # menu entries you want to add after this comment.  Be careful not to change
 # the 'exec tail' line above.
 
+
+myroot='hd2,msdos1'
+myuuid=`blkid /dev/sdc1 -s UUID|awk -F '"' '{print $2}'`
+
 menuentry 'Debian install' {
     set background_color=black
 		set root='hd2,msdos1'
@@ -13,10 +17,10 @@ menuentry 'Debian install' {
 
 menuentry 'CentOS install' {
     set background_color=black
-		set root='hd2,msdos1'
+		set root=${myroot}
 set isofile="/centos/CentOS-7-x86_64-Minimal-1804.iso"
 		loopback loop ${isofile}
-		linux    (loop)/isolinux/vmlinuz inst.stage2=hd:UUID=4cc5c7af-4fed-40e9-afcd-7aef3819a32b:/${isofile} rhgb
+		linux    (loop)/isolinux/vmlinuz inst.stage2=hd:UUID=${myuuid}:/${isofile} rhgb
 		initrd    (loop)/isolinux/initrd.img 
 }
 
