@@ -1,0 +1,16 @@
+#!/bin/sh
+cat <<EOF
+if [ -f  \${config_directory}/custom.cfg ]; then
+  source \${config_directory}/custom.cfg
+elif [ -z "\${config_directory}" -a -f  \$prefix/custom.cfg ]; then
+  source \$prefix/custom.cfg;
+fi
+EOF
+
+cat<<EOF
+myuuid=`blkid /dev/sdc1 -s UUID | awk -F '"' '{print $2}'`
+myroot='hd2,msdos1'
+EOF
+#set myuuid=`blkid /dev/sdc1 -s UUID | awk -F '"' '{print $2}'`
+#set myuuid=`blkid /dev/sdc1 -s UUID|sed "s#.*=##g"`
+#set myuuid=`ls /dev/disk/by-uuid/ -al|grep sdc1$|awk '{print $9}'`

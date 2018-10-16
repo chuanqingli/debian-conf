@@ -5,9 +5,6 @@ exec tail -n +3 $0
 # the 'exec tail' line above.
 
 
-myroot='hd2,msdos1'
-myuuid=`blkid /dev/sdc1 -s UUID|awk -F '"' '{print $2}'`
-
 menuentry 'Debian install' {
     set background_color=black
 		set root='hd2,msdos1'
@@ -16,6 +13,8 @@ menuentry 'Debian install' {
 }
 
 menuentry 'CentOS install' {
+echo "===>${myuuid}tttttt=${myroot}=ttttt"
+sleep 5s
     set background_color=black
 		set root=${myroot}
 set isofile="/centos/CentOS-7-x86_64-Minimal-1804.iso"
@@ -30,4 +29,3 @@ menuentry 'CentOS 7' {
 		set root='hd1,msdos1'
 		configfile /boot/grub2/grub.cfg
 }
-
