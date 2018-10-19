@@ -7,9 +7,12 @@ elif [ -z "\${config_directory}" -a -f  \$prefix/custom.cfg ]; then
 fi
 EOF
 
-cat<<EOF
-myuuid=`blkid /dev/sdc1 -s UUID | awk -F '"' '{print $2}'`
 myroot='hd2,msdos1'
+mydev=/dev/sdc1
+cat<<EOF
+myroot=${myroot}
+mydev=${mydev}
+myuuid=`blkid ${mydev} -s UUID | awk -F '"' '{print $2}'`
 EOF
 #set myuuid=`blkid /dev/sdc1 -s UUID | awk -F '"' '{print $2}'`
 #set myuuid=`blkid /dev/sdc1 -s UUID|sed "s#.*=##g"`

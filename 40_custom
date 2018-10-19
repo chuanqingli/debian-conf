@@ -8,27 +8,56 @@ exec tail -n +3 $0
 menuentry 'Debian install' {
     set background_color=black
 	set root=${myroot}
-    linux /debian/vmlinuz vga=788 --- quiet 
-    initrd /debian/initrd.gz
+    set isofile="/debian/debian-9.5.0-amd64-netinst.iso"
+     search --no-floppy --fs-uuid --set=root ${myuuid}
+	loopback loop ${isofile}
+linux (loop)/install.amd/gtk/vmlinuz vga=788 --- quiet 
+initrd /debian/initrd.gz 
 }
 
 menuentry 'CentOS install' {
+insmod memdisk
     set background_color=black
 	set root=${myroot}
     set isofile="/centos/CentOS-7-x86_64-Minimal-1804.iso"
 	loopback loop ${isofile}
+#	linux16 /memdisk iso raw
+#	initrd16  ${isofile}
+
 	linux (loop)/isolinux/vmlinuz inst.stage2=hd:UUID=${myuuid}:/${isofile} rhgb
 	initrd (loop)/isolinux/initrd.img 
 }
 
 
-menuentry 'ArchLinux install'{
+menuentry 'ArchLinux install-memdisk'{
     set background_color=black
 	set root=${myroot}
     set isofile="/archlinux/archlinux-2018.09.01-x86_64.iso"
-	loopback loop ${isofile}
-    linux (loop)/arch/boot/x86_64/vmlinuz img_label=GRUB2 img_loop=${isofile}  systemd.wants=sshd.service
-    initrd (loop)/arch/boot/x86_64/archiso.img
+	linux16 /memdisk iso raw
+	initrd16  ${isofile}
+}
+ menuentry 'ArchLinux install'{
+     set background_color=black
+ 	set root=${myroot}
+     set isofile="/archlinux/archlinux-2018.09.01-x86_64.iso"
+     search --no-floppy --fs-uuid --set=root ${myuuid}
+ 	loopback loop ${isofile}
+      linux  (loop)/arch/boot/x86_64/vmlinuz archisobasedir=arch archisolabel=ARCH_201809 img_dev=${mydev} img_loop=${isofile}
+      initrd (loop)/arch/boot/x86_64/archiso.img
+ }
+
+
+menuentry 'grub manager' {
+	set root=${myroot}
+	linux16 /memdisk iso raw
+	initrd16 /grubfm.iso
+}
+
+menuentry 'grub test' {
+    echo "1=====${prefix}======"
+	set root=${myroot}
+    echo "2=====${prefix}======"
+    sleep 10s
 }
 
 
@@ -37,3 +66,5 @@ menuentry 'CentOS 7' {
 	set root=${myroot}
 	configfile /boot/grub2/grub.cfg
 }
+
+
