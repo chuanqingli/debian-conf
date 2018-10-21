@@ -164,7 +164,42 @@ config-myiso(){
 
 }
 
+#截图
+convert-crop(){
+    srcdir='/home/chuanqing/VirtualBox VMs/debian22/'
+    prefix='VirtualBox_debian22_21_10_2018_10_'
+    suffix='.png'
+    dstfname='test'
 
+    pp0='1024x512+0+127'
+    pp1='1024x55+0+584'
+
+    fname="09_03 12_06"
+    rundir=`pwd`
+
+    cd "$srcdir"
+    index=0
+    vcmd=''
+    for ppp in ${fname};do
+        index=$((index+1))
+
+        kkk=$pp1
+        if [[ $index == 1 ]];then
+            kkk=$pp0
+        fi
+
+        convert ${prefix}${ppp}${suffix} -crop $kkk ${dstfname}${index}.png
+        vcmd="${vcmd} ${dstfname}${index}.png"
+    done
+
+    convert $vcmd -append ${dstfname}00.png
+    cd $rundir
+}
 
 source ../shell-func/git-func.sh
 $1
+
+
+if [[ $1 ==  git-init-origin ]];then
+    $1
+fi
