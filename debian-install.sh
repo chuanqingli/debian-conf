@@ -166,7 +166,7 @@ config-myiso(){
 
 #截图
 convert-crop(){
-    srcdir='/home/chuanqing/VirtualBox VMs/debian22/'
+    srcdir='/home/chuanqing/VirtualBox VMs/debian22/ttt'
     prefix='VirtualBox_debian22_21_10_2018_10_'
     suffix='.png'
     dstfname='test'
@@ -180,7 +180,8 @@ convert-crop(){
     cd "$srcdir"
     index=0
     vcmd=''
-    for ppp in ${fname};do
+
+    for ppp in `ls|sort`;do
         index=$((index+1))
 
         kkk=$pp1
@@ -188,9 +189,23 @@ convert-crop(){
             kkk=$pp0
         fi
 
-        convert ${prefix}${ppp}${suffix} -crop $kkk ${dstfname}${index}.png
+        convert ${ppp} -crop $kkk ${dstfname}${index}.png
         vcmd="${vcmd} ${dstfname}${index}.png"
     done
+
+
+
+#    for ppp in ${fname};do
+#        index=$((index+1))
+#
+#        kkk=$pp1
+#        if [[ $index == 1 ]];then
+#            kkk=$pp0
+#        fi
+#
+#        convert ${prefix}${ppp}${suffix} -crop $kkk ${dstfname}${index}.png
+#        vcmd="${vcmd} ${dstfname}${index}.png"
+#    done
 
     convert $vcmd -append ${dstfname}00.png
     cd $rundir
