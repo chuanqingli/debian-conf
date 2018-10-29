@@ -211,6 +211,45 @@ convert-crop(){
     cd $rundir
 }
 
+convert-crop2(){
+    WID=`xdotool search --name "debian22" | head -1`
+    import -frame -window $WID `date '+%Y%m%d%H%M%S'`.png
+    ls -al *.png | wc -l
+}
+
+
+convert-crop3(){
+    srcdir='/media/win/E/chuanqing/gitspace/debian-conf/'
+    prefix='20181029'
+    suffix='.png'
+    dstfname='test'
+
+    pp0='1024x512+0+178'
+    pp1='1024x55+0+636'
+
+    rundir=`pwd`
+
+    cd "$srcdir"
+    index=0
+    vcmd=''
+
+    for ppp in `ls|sort`;do
+        index=$((index+1))
+
+        kkk=$pp1
+        if [[ $index == 1 ]];then
+            kkk=$pp0
+        fi
+
+        convert ${ppp} -crop $kkk ${dstfname}${index}.png
+        vcmd="${vcmd} ${dstfname}${index}.png"
+    done
+
+    convert $vcmd -append ${dstfname}00.png
+    cd $rundir
+}
+
+
 source ../shell-func/git-func.sh
 $1
 
