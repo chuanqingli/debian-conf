@@ -212,7 +212,7 @@ convert-crop(){
 }
 
 convert-crop2(){
-    WID=`xdotool search --name "debian22" | head -1`
+    WID=`xdotool search --name "debian" | head -1`
     import -frame -window $WID `date '+%Y%m%d%H%M%S'`.png
     ls -al *.png | wc -l
 }
