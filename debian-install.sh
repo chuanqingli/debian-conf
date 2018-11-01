@@ -212,8 +212,10 @@ convert-crop(){
 }
 
 convert-crop2(){
-    WID=`xdotool search --name "debian" | head -1`
-    import -frame -window $WID `date '+%Y%m%d%H%M%S'`.png
+    WID=`xdotool search --name "^debian.*Oracle" | head -1`
+    import -frame -window $WID tmp.png
+    convert tmp.png -crop 1020x512+2+178 `date '+%Y%m%d%H%M%S'`.png
+#    import -frame -window $WID `date '+%Y%m%d%H%M%S'`.png
     ls -al *.png | wc -l
 }
 
