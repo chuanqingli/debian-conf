@@ -212,22 +212,26 @@ convert-crop(){
 }
 
 convert-crop2(){
-#    WID=`xdotool search --name "^debian" | head -2`
+    #    WID=`xdotool search --name "^debian" | head -2`
     WID=`xdotool search --name "^debian.*Oracle" | head -2`
-ttt=`echo "$WID" | wc -l`
-if [[ $ttt != 1 ]];then
-    echo "符合截图程序查询条件的实例数不为1，请修正查询条件后重试！==>$ttt"
-    return
-fi
+    ttt=`echo "$WID" | wc -l`
+    if [[ $ttt != 1 ]];then
+        echo "符合截图程序查询条件的实例数不为1，请修正查询条件后重试！==>$ttt"
+        return
+    fi
 
-key=y
-while (( $key == y ));do
-    read -p "按y继续。。。:" -s key
-    import -frame -window $WID tmp.png
-    convert tmp.png -crop 1020x512+2+178 `date '+%Y%m%d%H%M%S'`.png
-#    import -frame -window $WID `date '+%Y%m%d%H%M%S'`.png
-    ls -al *.png | wc -l
-done
+    echo "wid==>$WID"
+
+    while (( 1 ));do
+        echo "当前png文件个数为:`ls -al *.png | wc -l`"
+        echo -n "回车开始截图:"
+        read
+        import -frame -window $WID tmp.png
+        # convert tmp.png -crop 1020x512+2+178 `date '+%Y%m%d%H%M%S'`.png
+        convert tmp.png -crop 1020x512+2+184 `date '+%Y%m%d%H%M%S'`.png
+        #    import -frame -window $WID `date '+%Y%m%d%H%M%S'`.png
+        clear
+    done
 
 }
 
