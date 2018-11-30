@@ -228,11 +228,32 @@ convert-crop2(){
         read
         import -frame -window $WID tmp.png
         # convert tmp.png -crop 1020x512+2+178 `date '+%Y%m%d%H%M%S'`.png
-        convert tmp.png -crop 1020x512+2+184 `date '+%Y%m%d%H%M%S'`.png
+        convert tmp.png -crop 1020x512+2+179 `date '+%Y%m%d%H%M%S'`.png
         #    import -frame -window $WID `date '+%Y%m%d%H%M%S'`.png
         clear
     done
 
+}
+
+
+convert-crop22(){
+    dstfname='test'
+
+    index=0
+    vcmd=''
+    for ppp in `ls 2018*.jpg|sort`;do
+        index=$((index+1))
+
+        if [[ $index == 1 ]];then
+            cp ${ppp} ${dstfname}${index}.jpg
+            vcmd="${vcmd} ${dstfname}${index}.jpg"
+            continue;
+        fi
+
+        convert ${ppp} -crop 1020x55+0+457 ${dstfname}${index}.jpg
+        vcmd="${vcmd} ${dstfname}${index}.jpg"
+    done
+    convert $vcmd -append ${dstfname}00.jpg
 }
 
 convert-crop3(){
@@ -266,11 +287,4 @@ convert-crop3(){
     cd $rundir
 }
 
-
-source ../shell-func/git-func.sh
 $1
-
-
-if [[ $1 ==  git-init-origin ]];then
-    $1
-fi
